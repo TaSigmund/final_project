@@ -15,6 +15,10 @@ const sequelize = db.sequelize;
 // create the Express app
 const app = express();
 
+// cross-origin resource sharing
+const cors = require('cors')
+app.use(cors());
+
 //parse incoming requests with JSON
 app.use(express.json());
 
