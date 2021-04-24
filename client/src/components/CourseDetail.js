@@ -8,7 +8,8 @@ import {Link, useParams} from "react-router-dom";
 
 function CourseDetail(){
 
-    const [course, setCourse] = useState({});
+    const [course, setCourse] = useState({}); //current course
+    const [user, setUser] = useState({}); //associated user
     const [materials, setMaterials] = useState([]);
     let {id} = useParams();
 
@@ -20,14 +21,14 @@ function CourseDetail(){
             .then(res => res.json())
             .then(courseAsJSON => {
                 setCourse(courseAsJSON);
+                setUser(courseAsJSON.User);
                 return courseAsJSON
             })
             .then(course => {
                 let materialsString = JSON.stringify(course.materialsNeeded); //turns JSON into string
                 let materialsArray = materialsString.split("*");//turns list into array
-                materialsArray.shift();//removes the empty string at the beginning
-                setMaterials(materialsArray.map(material => <li key={'material' + course.id + materialsArray.indexOf(material)}>{material}</li>)) //create and store list items
-            })
+                materialsArray.shift();//removes the empty string in the first position
+                setMaterials(materialsArray.map(material => <li key={'material:' + materialsArray.indexOf(material)}>{material}</li>))}) //create and store list items
             .catch(error => console.log('connection failed', error))
     }, [id])//changes every time a new course is loaded
 
@@ -49,7 +50,7 @@ function CourseDetail(){
                     <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
-                        <p>by </p>
+                        <p>by {user.firstName} {user.lastName}</p>
                         <p>{course.description}</p>
                     </div>
                     <div>
