@@ -52,7 +52,7 @@ router.get('/', asyncHandler(async (req, res, next)=>{
 router.get('/:id', asyncHandler(async (req, res, next)=>{
   const course = await Course.findByPk(req.params.id,
       {
-        attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
+        attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
         include: [
           {
             model: User,

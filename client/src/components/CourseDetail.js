@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from './Header';
+import {Link, useParams} from "react-router-dom";
 
 /****
  * DISPLAYS A COURSE DESCRIPTION ALONG WITH THE POSSIBILITY TO UPDATE OR DELETE A COURSE
@@ -7,15 +8,38 @@ import Header from './Header';
 
 function CourseDetail(){
 
+    const [course, setCourse] = useState({});
+    const [materials, setMaterials] = useState([]);
+    let {id} = useParams();
+
+    /****
+    * FETCH DATA
+    ***/
+    useEffect(()=>{
+        fetch(`http://localhost:5000/api/courses/${id}`)
+            .then(res => res.json())
+            .then(courseAsJSON => {
+                setCourse(courseAsJSON);
+                return courseAsJSON
+            })
+            .then(course => {
+                let materialsString = JSON.stringify(course.materialsNeeded); //turns JSON into string
+                let materialsArray = materialsString.split("*");//turns list into array
+                materialsArray.shift();//removes the empty string at the beginning
+                setMaterials(materialsArray.map(material => <li key={'material' + course.id + materialsArray.indexOf(material)}>{material}</li>)) //create and store list items
+            })
+            .catch(error => console.log('connection failed', error))
+    }, [id])//changes every time a new course is loaded
+
     return(
     <React.Fragment>
         <Header></Header>
         <main>
         <div className="actions--bar">
             <div className="wrap">
-                <a className="button" href="update-course.html">Update Course</a>
-                <a className="button" href="#">Delete Course</a>
-                <a className="button button-secondary" href="index.html">Return to List</a>
+                <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                <Link className="button" to={`/api/courses/${course.id}`}>Delete Course</Link>
+                <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
         </div>
         <div className="wrap">
@@ -24,17 +48,16 @@ function CourseDetail(){
                 <div className="main--flex">
                     <div>
                         <h3 className="course--detail--title">Course</h3>
-                        <h4 className="course--name">Replace With Course Title</h4>
-                        <p>by User First Name and User Last Name</p>
-                        <p>Course Description</p>
+                        <h4 className="course--name">{course.title}</h4>
+                        <p>by </p>
+                        <p>{course.description}</p>
                     </div>
                     <div>
                         <h3 className="course--detail--title">estimated time</h3>
-                        <p> Replace with time</p>
+                        <p> {course.estimatedTime} </p>
                         <h3 className="course--detail--title">materials needed</h3>
                         <ul className="course--detail--list">
-                            <li>Replace wit items</li>
-                            <li>Replace wit items</li>
+                            {materials}
                         </ul>
                     </div>
                 </div>
