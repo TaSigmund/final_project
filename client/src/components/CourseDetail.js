@@ -26,7 +26,9 @@ function CourseDetail(){
             })
             .then(course => {
                 let materialsString = JSON.stringify(course.materialsNeeded); //turns JSON into string
-                let materialsArray = materialsString.split("*");//turns list into array
+                materialsString = materialsString.replace(/\\n/g, ""); //removes the line breaks
+                materialsString = materialsString.replace(/"/g, ""); //removes the apostrophes
+                let materialsArray = materialsString.split("*"); //turns list into array
                 materialsArray.shift();//removes the empty string in the first position
                 setMaterials(materialsArray.map(material => <li key={'material:' + materialsArray.indexOf(material)}>{material}</li>))}) //create and store list items
             .catch(error => console.log('connection failed', error))
