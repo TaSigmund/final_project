@@ -11,6 +11,7 @@ function CourseDetail(){
     const [course, setCourse] = useState({}); //current course
     const [user, setUser] = useState({}); //associated user
     const [materials, setMaterials] = useState([]);
+    const [courseDescription, setCourseDescription] = useState([]);
     let {id} = useParams();
 
     /****
@@ -26,11 +27,19 @@ function CourseDetail(){
             })
             .then(course => {
                 let materialsString = JSON.stringify(course.materialsNeeded); //turns JSON into string
-                materialsString = materialsString.replace(/\\n/g, ""); //removes the line breaks
+                materialsString = materialsString.replace(/\*/g, ""); //removes the asterisks
                 materialsString = materialsString.replace(/"/g, ""); //removes the apostrophes
-                let materialsArray = materialsString.split("*"); //turns list into array
-                materialsArray.shift();//removes the empty string in the first position
-                setMaterials(materialsArray.map(material => <li key={'material:' + materialsArray.indexOf(material)}>{material}</li>))}) //create and store list items
+                let materialsArray = materialsString.split("\\n"); //turns list into array
+                materialsArray.pop();//removes the empty string in the last position
+                setMaterials(materialsArray.map(material => <li key={'material:' + materialsArray.indexOf(material)}>{material}</li>))//create and store list items
+                return course
+            }) 
+            .then(course => {
+                let descriptionString = JSON.stringify(course.description); //turns JSON into string
+                let descriptionArray = descriptionString.split("\\n"); //turns list into array
+                descriptionArray = descriptionArray.filter(trueForStrings=> trueForStrings) //removes empty strings
+                setCourseDescription(descriptionArray.map(paragraph => <p key={'description:' + descriptionArray.indexOf(paragraph)}>{paragraph}</p>))//create and store paragraphs
+            })
             .catch(error => console.log('connection failed', error))
     }, [id])//changes every time a new course is loaded
 
@@ -53,7 +62,7 @@ function CourseDetail(){
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
                         <p>by {user.firstName} {user.lastName}</p>
-                        <p>{course.description}</p>
+                        {courseDescription}
                     </div>
                     <div>
                         <h3 className="course--detail--title">estimated time</h3>
