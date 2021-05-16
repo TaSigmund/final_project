@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from "react-router-dom";
+import {LoginContext} from '../LoginProvider';
 
 /****
  * DISPLAYS A NAV BAR AT THE TOP OF THE PAGE
  ***/
 function Header(){
+
+    const value = useContext(LoginContext);
+
     return(
     <header>
         <div className="wrap header--flex">
@@ -13,8 +17,17 @@ function Header(){
             </h1>
             <nav>
                 <ul className="header--signedout">
-                    <li><Link to="/signup">Sign Up</Link></li>
+                    {
+                    value.loggedIn ?
+                    <React.Fragment>
+                    <li>Username</li>
+                    <li><Link to="/signout">Sign Out</Link></li> 
+                    </React.Fragment> :
+                    <React.Fragment>
+                    <li><Link to="/signup">Sign Up</Link></li> 
                     <li><Link to="/signin">Sign In</Link></li>
+                    </React.Fragment>
+                    }
                 </ul>
             </nav>
         </div>

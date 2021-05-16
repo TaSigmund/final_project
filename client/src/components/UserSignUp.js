@@ -1,16 +1,26 @@
 import React from 'react';
 import Header from './Header';
+import {useHistory} from 'react-router-dom'
+
 /****
  * DISPLAYS A SIGN UP FORM
  ***/
 function UserSignUp(){
+
+    let history = useHistory();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        history.push('/');
+    }
+
     return(
         <React.Fragment>
             <Header></Header>
             <main>
                 <div className="form--centered">
                     <h2>Sign Up</h2>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <label for="firstName">First Name</label>
                         <input id="firstName" name="firstName" type="text" value=""/>
                         <label for="lastName">Last Name</label>

@@ -4,9 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//Context
+import {LoginProvider} from './LoginProvider'
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LoginProvider>
+      <App />
+    </LoginProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
