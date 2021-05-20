@@ -8,6 +8,7 @@ import {LoginContext} from '../LoginProvider';
 function Header(){
 
     const value = useContext(LoginContext);
+    const authUser = value.authenticatedUser;
 
     return(
     <header>
@@ -18,7 +19,7 @@ function Header(){
             <nav>
                 <ul className="header--signedout">
                     {
-                    value.loggedIn ?
+                    authUser ?
                     <React.Fragment>
                     <li>Username</li>
                     <li><Link to="/signout">Sign Out</Link></li> 

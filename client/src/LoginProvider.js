@@ -1,18 +1,23 @@
 import React, {useState, createContext} from 'react';
+import Data from './Data';
 export const LoginContext = createContext();
 
 export function LoginProvider({children}){
-    const [loggedIn, setLoggedIn] = useState(false);
+    const data = new Data();
+    const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
-    function login(){
-        setLoggedIn(true)
-    }
+    async function signIn(username, password){
+        const user = await data.getUser(username, password);
+        setAuthenticatedUser(user);
+        return user;
+      }
 
     return(
         <LoginContext.Provider
             value={{
-                loggedIn,
-                login
+                signIn,
+                data,
+                authenticatedUser
             }}
         >
             {children}
