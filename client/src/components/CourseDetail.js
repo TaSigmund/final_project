@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Header from './Header';
 import {Link, useParams} from "react-router-dom";
+import {LoginContext} from '../LoginProvider';
 
 /****
  * DISPLAYS A COURSE DESCRIPTION ALONG WITH THE POSSIBILITY TO UPDATE OR DELETE A COURSE
@@ -13,6 +14,9 @@ function CourseDetail(){
     const [materials, setMaterials] = useState([]);
     const [courseDescription, setCourseDescription] = useState([]);
     let {id} = useParams();
+
+    const value = useContext(LoginContext);
+    const authUser = value.authenticatedUser;
 
     /****
     * FETCH DATA
@@ -49,8 +53,17 @@ function CourseDetail(){
         <main>
         <div className="actions--bar">
             <div className="wrap">
-                <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
-                <Link className="button" to={`/api/courses/${course.id}`}>Delete Course</Link>
+                {
+                    (authUser && authUser.id === course.userId)?
+                    <React.Fragment>
+                    <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                    <Link className="button" to={`/api/courses/${course.id}`}>Delete Course</Link>
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                    </React.Fragment>
+                }
+               
                 <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
         </div>
