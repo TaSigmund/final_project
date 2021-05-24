@@ -6,8 +6,9 @@ const bcrypt = require('bcryptjs');
 // Middleware to authenticate the request using Basic Auth.
 exports.authenticateUser = 
 async (req, res, next) => {
-  const credentials = auth(req); //parse user authorization header
-  atob(credentials); //decode base-64 encoded string
+
+const credentials = auth(req); //parse user authorization header
+  
   let message;
   if(credentials){
       const user = await User.findOne({where: {emailAddress: credentials.name}})
