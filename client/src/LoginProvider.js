@@ -11,11 +11,16 @@ export function LoginProvider({children}){
         setAuthenticatedUser(user);
         return user;
       }
+    
+      async function signOut(){
+        return setAuthenticatedUser(null);
+      }
 
     return(
         <LoginContext.Provider
             value={{
                 signIn,
+                signOut,
                 data,
                 authenticatedUser
             }}

@@ -21,7 +21,7 @@ function Header(){
                     {
                     authUser ?
                     <React.Fragment>
-                    <li>Username</li>
+                    <li>{authUser.firstName} {authUser.lastName}</li>
                     <li><Link to="/signout">Sign Out</Link></li> 
                     </React.Fragment> :
                     <React.Fragment>
