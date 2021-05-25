@@ -34,4 +34,19 @@ export default class Data {
       throw new Error();
     }
   }
+  async createUser(user) {
+    const response = await this.api('/users', 'POST', user);
+    if (response.status === 201) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
+
 }

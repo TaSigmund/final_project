@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Header from './Header';
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
+import {LoginContext} from '../LoginProvider';
 
 /****
  * DISPLAYS A SIGN UP FORM
  ***/
 function UserSignUp(){
 
+    const value = useContext(LoginContext);
     let history = useHistory();
     
     const [firstNameField, setFirstNameField] = useState("");
@@ -17,6 +19,13 @@ function UserSignUp(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const user = {
+            "firstName": firstNameField,
+            "lastName": lastNameField,
+            "emailAddress": emailField,
+            "password": passwordField
+        }
+        value.signUp(user);
         history.push('/');
     }
 
