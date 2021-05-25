@@ -3,7 +3,8 @@ import Data from './Data';
 export const LoginContext = createContext();
 
 export function LoginProvider({children}){
-    const data = new Data();
+    const data = new Data(); //creates an instance of data
+
     const [authenticatedUser, setAuthenticatedUser] = useState(null);
     const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
 
@@ -32,7 +33,8 @@ export function LoginProvider({children}){
                 signIn,
                 signOut,
                 data,
-                authenticatedUser
+                authenticatedUser,
+                authenticatedPassword
             }}
         >
             {children}

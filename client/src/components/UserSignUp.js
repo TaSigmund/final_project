@@ -19,6 +19,7 @@ function UserSignUp(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(passwordField===confirmPasswordField){ //checks for typos
         const user = {
             "firstName": firstNameField,
             "lastName": lastNameField,
@@ -27,6 +28,8 @@ function UserSignUp(){
         }
         value.signUp(user);
         history.push('/');
+        }
+        else{history.push('/signup');}
     }
 
     return(
