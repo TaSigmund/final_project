@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
@@ -17,6 +17,22 @@ function UpdateCourse(){
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
+
+    /****
+    * FETCH DATA FOR PLACEHOLDERS
+    ***/
+     useEffect(()=>{
+        fetch(`http://localhost:5000/api/courses/${id}`)
+            .then(res => res.json())
+            .then(courseAsJSON => {
+                setCourseTitle(courseAsJSON.title);
+                setCourseDescription(courseAsJSON.description);
+                setEstimatedTime(courseAsJSON.estimatedTime);
+                setMaterialsNeeded(courseAsJSON.materialsNeeded);
+                return courseAsJSON
+            })
+            .catch(error => console.log('connection failed', error))
+    }, [id])//changes every time a new course is loaded
 
     const handleSubmit = async(e) => {
         e.preventDefault();
