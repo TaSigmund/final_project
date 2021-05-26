@@ -99,7 +99,7 @@ function CreateCourse(){
                                     ></textarea>
                             </div>
                         </div>
-                        <button className="button" type="submit">Create Course</button><button class="button button-secondary">Cancel</button>
+                        <button className="button" type="submit">Create Course</button><button className="button button-secondary">Cancel</button>
                     </form>
                 </div>
             </main>

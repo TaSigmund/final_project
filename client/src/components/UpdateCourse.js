@@ -52,10 +52,10 @@ function UpdateCourse(){
         <React.Fragment>
             <Header></Header>
             <main>
-                    <div class="wrap">
+                    <div className="wrap">
                         <h2>Update Course</h2>
                         <form onSubmit={handleSubmit}>
-                            <div class="main--flex">
+                            <div className="main--flex">
                                 <div>
                                     <label for="courseTitle">Course Title</label>
                                     <input 
@@ -100,7 +100,7 @@ function UpdateCourse(){
                                     </textarea>
                                 </div>
                             </div>
-                            <button class="button" type="submit">Update Course</button><button class="button button-secondary">Cancel</button>
+                            <button className="button" type="submit">Update Course</button><button className="button button-secondary">Cancel</button>
                         </form>
                     </div>
                 </main>

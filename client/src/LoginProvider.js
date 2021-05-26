@@ -2,6 +2,10 @@ import React, {useState, createContext} from 'react';
 import Data from './Data';
 export const LoginContext = createContext();
 
+/***
+ * PROVIDER FOR USER AUTHENTICATION / CONTEXT API
+ * based on an adapted code example from the book: Nils Hartmann and Oliver Zeigermann, React, dpunkt.verlag 2020,  page 205.
+ ***/
 export function LoginProvider({children}){
     const data = new Data(); //creates an instance of data
 
