@@ -20,7 +20,6 @@ function CreateCourse(){
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
 
-
     const handleSubmit = async(e) => {
         e.preventDefault();
         const course = {

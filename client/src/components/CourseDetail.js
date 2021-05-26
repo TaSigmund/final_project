@@ -34,7 +34,9 @@ function CourseDetail(){
                 materialsString = materialsString.replace(/\*/g, ""); //removes the asterisks
                 materialsString = materialsString.replace(/"/g, ""); //removes the apostrophes
                 let materialsArray = materialsString.split("\\n"); //turns list into array
-                materialsArray.pop();//removes the empty string in the last position
+                console.log(materialsArray);
+                if (materialsArray[materialsArray.length - 1] === ""){//checks for empty strings
+                materialsArray.pop()}; //removes the empty string in the last position
                 setMaterials(materialsArray.map(material => <li key={'material:' + materialsArray.indexOf(material)}>{material}</li>))//create and store list items
                 return course
             }) 

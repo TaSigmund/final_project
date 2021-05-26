@@ -9,7 +9,7 @@ export function LoginProvider({children}){
     const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
 
     async function signUp(user){
-        const newUser = await data.createUser(user);
+        await data.createUser(user);
         return null;
       }
     
