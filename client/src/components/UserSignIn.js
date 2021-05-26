@@ -27,7 +27,7 @@ function UserSignIn(){
                 <div className="form--centered">
                 <h2>Sign In</h2>
                 <form onSubmit={handleSubmit}>
-                <label for="emailAddress">Email Address</label>
+                <label htmlFor="emailAddress">Email Address</label>
                 <input 
                     id="emailAddress" 
                     name="emailAddress" 
@@ -36,7 +36,7 @@ function UserSignIn(){
                     placeholder="Please provide an e-mail address."
                     onChange={e => setEmailField(e.target.value)}
                     ></input>
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input id="password"
                     name="password"
                     type="password"

@@ -39,7 +39,7 @@ function UserSignUp(){
                 <div className="form--centered">
                     <h2>Sign Up</h2>
                     <form onSubmit={handleSubmit}>
-                        <label for="firstName">First Name</label>
+                        <label htmlFor="firstName">First Name</label>
                         <input 
                             id="firstName" 
                             name="firstName" 
@@ -47,7 +47,7 @@ function UserSignUp(){
                             value={firstNameField}
                             onChange={e => setFirstNameField(e.target.value)}
                         />
-                        <label for="lastName">Last Name</label>
+                        <label htmlFor="lastName">Last Name</label>
                         <input 
                             id="lastName" 
                             name="lastName" 
@@ -55,7 +55,7 @@ function UserSignUp(){
                             value={lastNameField}
                             onChange={e => setLastNameField(e.target.value)}
                         />
-                        <label for="emailAddress">Email Address</label>
+                        <label htmlFor="emailAddress">Email Address</label>
                         <input 
                             id="emailAddress" 
                             name="emailAddress" 
@@ -63,7 +63,7 @@ function UserSignUp(){
                             value={emailField}
                             onChange={e => setEmailField(e.target.value)}
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input 
                             id="password" 
                             name="password" 
@@ -71,7 +71,7 @@ function UserSignUp(){
                             value={passwordField}
                             onChange={e => setPasswordField(e.target.value)}
                         />
-                        <label for="confirmPassword">Confirm Password</label>
+                        <label htmlFor="confirmPassword">Confirm Password</label>
                         <input 
                             id="confirmPassword" 
                             name="confirmPassword" 

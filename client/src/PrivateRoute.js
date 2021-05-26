@@ -6,17 +6,19 @@ import {Redirect, Route} from 'react-router-dom';
  * CONFIGURATION FOR PROTECTED ROUTES
  * based on an adapted code example from https://reactrouter.com/web/example/auth-workflow
  ***/
-function PrivateRoute({ children}) {
+function PrivateRoute({children, ...rest }) {
     let value = useContext(LoginContext)
     return (
       <Route
-        render={() =>
+        {...rest}
+        render={({location}) =>
           value.authenticatedUser ? (
             children
           ) : (
             <Redirect
               to={{
-                pathname: "/signin"
+                pathname: "/signin",
+                state: { from: location }
               }}
             />
           )

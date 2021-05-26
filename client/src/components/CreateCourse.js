@@ -49,7 +49,7 @@ function CreateCourse(){
                     <form onSubmit={handleSubmit}>
                         <div className="main--flex">
                             <div>
-                                <label for="courseTitle">Course Title</label>
+                                <label htmlFor="courseTitle">Course Title</label>
                                 <input
                                     id="courseTitle" 
                                     name="courseTitle" 
@@ -69,7 +69,7 @@ function CreateCourse(){
                                     onChange={e => setCourseAuthor(e.target.value)}
                                 />
 
-                                <label for="courseDescription">Course Description</label>
+                                <label htmlFor="courseDescription">Course Description</label>
                                 <textarea 
                                     id="courseDescription" 
                                     name="courseDescription"
@@ -89,7 +89,7 @@ function CreateCourse(){
                                     onChange={e => setEstimatedTime(e.target.value)}
                                     />
 
-                                <label for="materialsNeeded">Materials Needed</label>
+                                <label htmlFor="materialsNeeded">Materials Needed</label>
                                 <textarea 
                                     id="materialsNeeded" 
                                     name="materialsNeeded"

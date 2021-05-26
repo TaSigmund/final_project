@@ -71,7 +71,6 @@ function CourseDetail(){
                     <React.Fragment>
                     </React.Fragment>
                 }
-               
                 <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
         </div>
@@ -91,7 +90,7 @@ function CourseDetail(){
                         <h3 className="course--detail--title">materials needed</h3>
                         <ul className="course--detail--list">
                             {materials}
-                        </ul>
+                        </ul>  
                     </div>
                 </div>
             </form>
