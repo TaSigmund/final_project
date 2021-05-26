@@ -2,12 +2,15 @@ import React, {useState, useEffect, useContext} from 'react';
 import Header from './Header';
 import {Link, useParams} from "react-router-dom";
 import {LoginContext} from '../LoginProvider';
+import Data from '../Data';
 
 /****
  * DISPLAYS A COURSE DESCRIPTION ALONG WITH THE POSSIBILITY TO UPDATE OR DELETE A COURSE
  ***/
 
 function CourseDetail(){
+
+    const data = new Data(); //creates an instance of data
 
     const [course, setCourse] = useState({}); //current course
     const [user, setUser] = useState({}); //associated user
@@ -17,6 +20,10 @@ function CourseDetail(){
 
     const value = useContext(LoginContext);
     const authUser = value.authenticatedUser;
+
+    const handleDelete = async(e) => {
+        await data.deleteCourse(`/courses/${id}`, value.authenticatedUser.emailAddress, value.authenticatedPassword);
+    }
 
     /****
     * FETCH DATA
@@ -58,7 +65,7 @@ function CourseDetail(){
                     (authUser && authUser.id === course.userId)?
                     <React.Fragment>
                     <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
-                    <Link className="button" to={`/api/courses/${course.id}`}>Delete Course</Link>
+                    <Link className="button" to={`/`}onClick={handleDelete}>Delete Course</Link>
                     </React.Fragment>
                     :
                     <React.Fragment>
