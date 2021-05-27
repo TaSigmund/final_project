@@ -3,6 +3,7 @@ import Header from './Header';
 import {Link, useParams} from "react-router-dom";
 import {LoginContext} from '../LoginProvider';
 import Data from '../Data';
+import ReactMarkdown from 'react-markdown';
 
 /****
  * DISPLAYS A COURSE DESCRIPTION ALONG WITH THE POSSIBILITY TO UPDATE OR DELETE A COURSE
@@ -34,23 +35,8 @@ function CourseDetail(){
             .then(courseAsJSON => {
                 setCourse(courseAsJSON);
                 setUser(courseAsJSON.User);
-                return courseAsJSON
-            })
-            .then(course => {
-                let materialsString = JSON.stringify(course.materialsNeeded); //turns JSON into string
-                materialsString = materialsString.replace(/\*/g, ""); //removes the asterisks
-                materialsString = materialsString.replace(/"/g, ""); //removes the apostrophes
-                let materialsArray = materialsString.split("\\n"); //turns list into array
-                if (materialsArray[materialsArray.length - 1] === ""){//checks for empty strings in the last position
-                materialsArray.pop()}; //removes the empty string in the last position
-                setMaterials(materialsArray.map(material => <li key={'material:' + materialsArray.indexOf(material)}>{material}</li>))//create and store list items
-                return course
-            }) 
-            .then(course => {
-                let descriptionString = JSON.stringify(course.description); //turns JSON into string
-                let descriptionArray = descriptionString.split("\\n"); //turns list into array
-                descriptionArray = descriptionArray.filter(trueForStrings=> trueForStrings) //removes empty strings
-                setCourseDescription(descriptionArray.map(paragraph => <p key={'description:' + descriptionArray.indexOf(paragraph)}>{paragraph}</p>))//create and store paragraphs
+                setMaterials(courseAsJSON.materialsNeeded);
+                setCourseDescription(courseAsJSON.description);
             })
             .catch(error => console.log('connection failed', error))
     }, [id])//changes every time a new course is loaded
@@ -89,7 +75,7 @@ function CourseDetail(){
                         <p> {course.estimatedTime} </p>
                         <h3 className="course--detail--title">materials needed</h3>
                         <ul className="course--detail--list">
-                            {materials}
+                        <ReactMarkdown>{materials}</ReactMarkdown>
                         </ul>  
                     </div>
                 </div>

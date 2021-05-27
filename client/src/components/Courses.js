@@ -18,7 +18,7 @@ useEffect(()=>{
             .then(res => res.json())
             .then(coursesAsJSON => setCourses(coursesAsJSON))
             .catch(error => console.log('connection failed', error))
-    }, []) //runs only once on initial render
+    }, [courses]) //runs on page load or if the number of courses changes
 
 
     return(

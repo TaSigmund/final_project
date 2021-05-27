@@ -15,16 +15,9 @@ const sequelize = db.sequelize;
 // create the Express app
 const app = express();
 
-// cross-origin resource sharing based on a code snippet found on:
-// https://stackoverflow.com/questions/57009371/access-to-xmlhttprequest-at-from-origin-localhost3000-has-been-blocked
+// cross-origin resource sharing 
 const cors = require('cors');
-// const corsOptions ={
-//     origin:'http://localhost:3000', 
-//     credentials:true,            //access-control-allow-credentials:true
-//     optionSuccessStatus:200
-// }
 app.use(cors());
-
 
 //parse incoming requests with JSON
 app.use(express.json());
