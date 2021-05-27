@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Header from './Header';
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useHistory} from "react-router-dom";
 import {LoginContext} from '../LoginProvider';
 import Data from '../Data';
 import ReactMarkdown from 'react-markdown';
@@ -21,6 +21,7 @@ function CourseDetail(){
 
     const value = useContext(LoginContext);
     const authUser = value.authenticatedUser;
+    let history = useHistory()
 
     const handleDelete = async(e) => {
         await data.deleteCourse(`/courses/${id}`, value.authenticatedUser.emailAddress, value.authenticatedPassword);
@@ -31,6 +32,11 @@ function CourseDetail(){
     ***/
     useEffect(()=>{
         fetch(`http://localhost:5000/api/courses/${id}`)
+            .then(res => {
+                if (res.status === 404) //makes sure there is a course with that id
+                {history.push("/notfound")}
+                else {return res}
+            })
             .then(res => res.json())
             .then(courseAsJSON => {
                 setCourse(courseAsJSON);
@@ -38,7 +44,8 @@ function CourseDetail(){
                 setMaterials(courseAsJSON.materialsNeeded);
                 setCourseDescription(courseAsJSON.description);
             })
-            .catch(error => console.log('connection failed', error))
+            .catch(error => {
+                console.log('connection failed', error)})
     }, [id])//changes every time a new course is loaded
 
     return(
@@ -68,7 +75,7 @@ function CourseDetail(){
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
                         <p>by {user.firstName} {user.lastName}</p>
-                        {courseDescription}
+                        <ReactMarkdown>{courseDescription}</ReactMarkdown>
                     </div>
                     <div>
                         <h3 className="course--detail--title">estimated time</h3>

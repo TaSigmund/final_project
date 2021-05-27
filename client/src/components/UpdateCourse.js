@@ -23,7 +23,18 @@ function UpdateCourse(){
     ***/
      useEffect(()=>{
         fetch(`http://localhost:5000/api/courses/${id}`)
+            .then(res => {
+                if (res.status === 404){ //makes sure there is a course with that id
+                    history.push("/notfound")}
+                else {return res}
+            })
             .then(res => res.json())
+            .then(courseAsJSON => { //makes sure the authenticated user owns that course
+                if (courseAsJSON.userId !== value.authenticatedUser.id){
+                    history.push("/forbidden")
+                }
+                else {return courseAsJSON}
+            })
             .then(courseAsJSON => {
                 setCourseTitle(courseAsJSON.title);
                 setCourseDescription(courseAsJSON.description);
@@ -45,7 +56,7 @@ function UpdateCourse(){
             userId: value.authenticatedUser.id
         };
         await data.updateCourse(`/courses/${id}`, course, value.authenticatedUser.emailAddress, value.authenticatedPassword);
-        history.push('/');
+            history.push('/');   
     }
 
     return(

@@ -19,6 +19,7 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
 import PrivateRoute from './PrivateRoute';
 
 
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/signin" component={UserSignIn}/>
         <Route exact path="/signup" component={UserSignUp}/>
         <Route exact path="/signout" component={UserSignOut}/>
+        <Route exact path="/forbidden" component={Forbidden}/>
         <Route component={NotFound}/>
       </Switch>
     </Router>

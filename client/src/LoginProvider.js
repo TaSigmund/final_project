@@ -1,5 +1,7 @@
 import React, {useState, createContext} from 'react';
 import Data from './Data';
+import Cookies from 'js-cookie';
+
 export const LoginContext = createContext();
 
 /***
@@ -8,8 +10,7 @@ export const LoginContext = createContext();
  ***/
 export function LoginProvider({children}){
     const data = new Data(); //creates an instance of data
-
-    const [authenticatedUser, setAuthenticatedUser] = useState(null);
+    const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null);
     const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
 
     async function signUp(user){
@@ -21,6 +22,7 @@ export function LoginProvider({children}){
         const user = await data.getUser(username, password);
         setAuthenticatedUser(user);
         setAuthenticatedPassword(password);
+        Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); //cookie name, cookie content, expiration day
         return user;
       }
     
