@@ -28,7 +28,8 @@ export function LoginProvider({children}){
     
       async function signOut(){
         setAuthenticatedUser(null);
-        setAuthenticatedPassword(null)
+        setAuthenticatedPassword(null);
+        Cookies.remove('authenticatedUser');
         return null
       }
 

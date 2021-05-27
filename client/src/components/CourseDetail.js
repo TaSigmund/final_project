@@ -13,10 +13,10 @@ function CourseDetail(){
 
     const data = new Data(); //creates an instance of data
 
-    const [course, setCourse] = useState({}); //current course
-    const [user, setUser] = useState({}); //associated user
-    const [materials, setMaterials] = useState([]);
-    const [courseDescription, setCourseDescription] = useState([]);
+    const [course, setCourse] = useState(""); //current course
+    const [user, setUser] = useState(""); //associated user
+    const [materials, setMaterials] = useState("");
+    const [courseDescription, setCourseDescription] = useState("");
     let {id} = useParams();
 
     const value = useContext(LoginContext);
@@ -46,7 +46,7 @@ function CourseDetail(){
             })
             .catch(error => {
                 console.log('connection failed', error)})
-    }, [id])//changes every time a new course is loaded
+    }, [id, history])//changes every time a new course is loaded
 
     return(
     <React.Fragment>

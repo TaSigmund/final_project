@@ -17,7 +17,7 @@ function UserSignIn(){
     const handleSubmit = (e) => {
         e.preventDefault();
         value.signIn(emailField, passwordField);
-        history.push('/');
+        history.push("/");
     }
 
     return(

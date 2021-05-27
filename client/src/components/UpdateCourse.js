@@ -43,7 +43,7 @@ function UpdateCourse(){
                 return courseAsJSON
             })
             .catch(error => console.log('connection failed', error))
-    }, [id])//changes every time a new course is loaded
+    }, [id, history, value.authenticatedUser.id])//changes every time a new course is loaded
 
     const handleSubmit = async(e) => {
         e.preventDefault();
