@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
@@ -8,16 +8,31 @@ import {LoginContext} from '../LoginProvider';
  ***/
 function UserSignIn(){
 
+    //access hook functionality
     const value = useContext(LoginContext);
-    let history = useHistory();
+    const history = useHistory();
 
+    //store field data
     const [emailField, setEmailField] = useState("");
     const [passwordField, setPasswordField] = useState("");
+    const [errors, setErrors] = useState(null);
 
-    const handleSubmit = (e) => {
+    //submit form
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        value.signIn(emailField, passwordField);
-        history.push("/");
+        const user = await value.signIn(emailField, passwordField)
+        .then(user => {
+            if (user !== null){ //login successful
+            history.push("/")
+        }
+            else{   //login not successful
+            setErrors("Access denied")
+            }
+    })
+        .catch(err => {
+            console.log(err);
+            history.push("/error")
+        })
     }
 
     return(

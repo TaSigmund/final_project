@@ -18,9 +18,7 @@ function UpdateCourse(){
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
 
-    /****
-    * FETCH DATA FOR PLACEHOLDERS
-    ***/
+    //display existing data for the course
      useEffect(()=>{
         fetch(`http://localhost:5000/api/courses/${id}`)
             .then(res => {
@@ -45,6 +43,7 @@ function UpdateCourse(){
             .catch(error => console.log('connection failed', error))
     }, [id, history, value.authenticatedUser.id])//changes every time a new course is loaded
 
+    //submit form and redirect
     const handleSubmit = async(e) => {
         e.preventDefault();
         const course = {

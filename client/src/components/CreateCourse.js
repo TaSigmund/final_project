@@ -9,17 +9,22 @@ import Data from '../Data';
  ***/
 
 function CreateCourse(){
+    
+    //creates an instance of data
+    const data = new Data();
 
-    const data = new Data(); //creates an instance of data
+    //access hook functionality
     const value = useContext(LoginContext);
     let history = useHistory();
 
+    //store field data
     const [courseTitle, setCourseTitle] = useState("");
     const [courseAuthor, setCourseAuthor] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
 
+    //submit form and redirect
     const handleSubmit = async(e) => {
         e.preventDefault();
         const course = {

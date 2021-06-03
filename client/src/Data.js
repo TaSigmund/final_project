@@ -1,6 +1,6 @@
 import config from './config';
-
 export default class Data {
+  
   api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
     const url = config.apiBaseUrl + path;
   
@@ -21,31 +21,21 @@ export default class Data {
     }
     return fetch(url, options);
   }
+  async getUser(username, password){
+      try{
+      const response = await this.api(`/users`, 'GET', null, true, { username, password })
+      if (response.status === 200) {
+        return response.json().then(data => data);
+      }}
+      catch{
+        throw new Error();
+      }
+    }
 
-  async getUser(username, password) {
-    const response = await this.api(`/users`, 'GET', null, true, { username, password });
-    if (response.status === 200) {
-      return response.json().then(data => data);
-    }
-    else if (response.status === 400) {
-      return null;
-    }
-    else {
-      throw new Error();
-    }
-  }
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
-    if (response.status === 201) {
-      return [];
-    }
-    else if (response.status === 400) {
-      return response.json().then(data => {
-        return data.errors;
-      });
-    }
-    else {
-      throw new Error();
+    if (response.status === 200) {
+      return response.json().then(data => data);
     }
   }
 
@@ -53,47 +43,35 @@ export default class Data {
   async createCourse(course, username, password) {
     const response = await this.api('/courses', 'POST', course, true, {username, password});
     if (response.status === 201) {
-      return [];
+      return null;
     }
-    else if (response.status === 400) {
+    else {
       return response.json().then(data => {
         return data.errors;
       });
-    }
-    else {
-      throw new Error();
     }
   }
 
   async updateCourse(path, course, username, password) {
     const response = await this.api(path, 'PUT', course, true, {username, password});
     if (response.status === 204) {
-      return [];
+      return null;
     }
-    else if (response.status === 403) {
+    else {
       return response.json().then(data => {
         return data.errors;
       });
     }
-    else {
-      throw new Error();
-    }
   }
-
   async deleteCourse(path, username, password) {
     const response = await this.api(path, 'DELETE', null, true, {username, password});
     if (response.status === 204) {
-      return [];
+      return null;
     }
-    else if (response.status === 403) {
+    else {
       return response.json().then(data => {
         return data.errors;
       });
     }
-    else {
-      throw new Error();
-    }
   }
-
-
 }

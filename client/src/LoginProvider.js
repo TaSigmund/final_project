@@ -10,7 +10,7 @@ export const LoginContext = createContext();
  ***/
 export function LoginProvider({children}){
     const data = new Data(); //creates an instance of data
-    const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null);
+    const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null); //check for cookie as possible default value
     const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
 
     async function signUp(user){
@@ -19,12 +19,14 @@ export function LoginProvider({children}){
       }
     
     async function signIn(username, password){
-        const user = await data.getUser(username, password);
-        setAuthenticatedUser(user);
-        setAuthenticatedPassword(password);
-        Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); //cookie name, cookie content, expiration day
-        return user;
-      }
+      const user = await data.getUser(username, password);
+          if(user !== null){
+            setAuthenticatedUser(user);
+            setAuthenticatedPassword(password);
+            Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); //cookie name, stored user data, let expire after one day
+        }
+      return user 
+    }
     
       async function signOut(){
         setAuthenticatedUser(null);

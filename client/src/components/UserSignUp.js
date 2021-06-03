@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import Header from './Header';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {LoginContext} from '../LoginProvider';
 
 /****
@@ -81,7 +81,7 @@ function UserSignUp(){
                             />
                         <button className="button" type="submit">Sign Up</button><button className="button button-secondary">Cancel</button>
                     </form>
-                    <p>Already have a user account? Click here to <a href="sign-in.html">sign in</a>!</p>
+                    <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
                 </div>
             </main>
         </React.Fragment>
