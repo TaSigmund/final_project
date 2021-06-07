@@ -22,15 +22,17 @@ export default class Data {
     return fetch(url, options);
   }
   async getUser(username, password){
-      try{
       const response = await this.api(`/users`, 'GET', null, true, { username, password })
       if (response.status === 200) {
         return response.json().then(data => data);
-      }}
-      catch{
-        throw new Error();
-      }
     }
+       else if (response.status === 401) { 
+        return null;
+    }
+        else {
+        throw new Error();
+    }
+  }
 
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);

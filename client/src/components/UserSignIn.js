@@ -20,17 +20,17 @@ function UserSignIn(){
     //submit form
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const user = await value.signIn(emailField, passwordField)
+        await value.signIn(emailField, passwordField)
         .then(user => {
-            if (user !== null){ //login successful
-            history.push("/")
+            if (user === null){ //login successful
+                setErrors(['Please make sure you provide a correct username and/or password']);
+                history.push("/signin")
         }
-            else{   //login not successful
-            setErrors("Access denied")
-            }
-    })
-        .catch(err => {
-            console.log(err);
+            else{ //login successful
+                history.push("/")
+        }})
+        .catch(error => {
+            console.error(error);
             history.push("/error")
         })
     }
@@ -41,6 +41,15 @@ function UserSignIn(){
             <main>
                 <div className="form--centered">
                 <h2>Sign In</h2>
+                {
+                    errors?
+                    <div className="validation--errors">
+                    <h3>Validation Errors</h3>
+
+                        <p>{errors[0]}</p>
+                    </div>:
+                    <React.Fragment></React.Fragment>
+                }
                 <form onSubmit={handleSubmit}>
                 <label htmlFor="emailAddress">Email Address</label>
                 <input 
