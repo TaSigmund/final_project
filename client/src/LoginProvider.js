@@ -14,8 +14,7 @@ export function LoginProvider({children}){
     const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
 
     async function signUp(user){
-        await data.createUser(user);
-        return null;
+        return await data.createUser(user);
       }
     
     async function signIn(username, password){

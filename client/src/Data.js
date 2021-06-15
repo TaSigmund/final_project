@@ -35,9 +35,15 @@ export default class Data {
   }
 
   async createUser(user) {
-    const response = await this.api('/users', 'POST', user);
-    if (response.status === 200) {
-      return response.json().then(data => data);
+    const response = await this.api('/users', 'POST', user)
+    if (response.status === 400) {
+      response.json().then(res => res.message) // bad request
+    }
+    else if (response.status === 201){
+      return null // user profile was created
+    }
+    else {
+      throw new Error();
     }
   }
 
@@ -46,11 +52,6 @@ export default class Data {
     const response = await this.api('/courses', 'POST', course, true, {username, password});
     if (response.status === 201) {
       return null;
-    }
-    else {
-      return response.json().then(data => {
-        return data.errors;
-      });
     }
   }
 

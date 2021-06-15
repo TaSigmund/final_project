@@ -16,8 +16,9 @@ function UserSignUp(){
     const [emailField, setEmailField] = useState("");
     const [passwordField, setPasswordField] = useState("");
     const [confirmPasswordField, setConfirmPasswordField] = useState("");
+    const [errors, setErrors] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         if(passwordField===confirmPasswordField){ //checks for typos
         const user = {
@@ -26,11 +27,21 @@ function UserSignUp(){
             "emailAddress": emailField,
             "password": passwordField
         }
-        value.signUp(user);
-        history.push('/');
-        }
-        else{history.push('/signup');}
-    }
+        await value.signUp(user)
+        .then(
+            async (response) => 
+            {
+            if (response === null){
+                await value.signIn(emailField, passwordField);
+                history.push("/");
+            }
+            else {
+                setErrors(response)
+                history.push("/signup")
+            }
+            }
+        )
+    }}
 
     return(
         <React.Fragment>
@@ -38,6 +49,15 @@ function UserSignUp(){
             <main>
                 <div className="form--centered">
                     <h2>Sign Up</h2>
+                    {
+                    errors?
+                    <div className="validation--errors">
+                    <h3>Validation Errors</h3>
+
+                        <p>{errors}</p>
+                    </div>:
+                    <React.Fragment></React.Fragment>
+                    }
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="firstName">First Name</label>
                         <input 
