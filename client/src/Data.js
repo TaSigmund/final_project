@@ -37,7 +37,7 @@ export default class Data {
   async createUser(user) {
     const response = await this.api('/users', 'POST', user)
     if (response.status === 400) {
-      response.json().then(res => res.message) // bad request
+      return response.json().then(res => res) // bad request
     }
     else if (response.status === 201){
       return null // user profile was created

@@ -36,7 +36,7 @@ function UserSignUp(){
                 history.push("/");
             }
             else {
-                setErrors(response)
+                setErrors(response.message)
                 history.push("/signup")
             }
             }
