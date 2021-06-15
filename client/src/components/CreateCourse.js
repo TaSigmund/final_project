@@ -23,6 +23,7 @@ function CreateCourse(){
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
+    const [errors, setErrors] = useState(null);
 
     //submit form and redirect
     const handleSubmit = async(e) => {
@@ -34,8 +35,20 @@ function CreateCourse(){
             materialsNeeded,
             userId: value.authenticatedUser.id
         };
-        await data.createCourse(course, value.authenticatedUser.emailAddress, value.authenticatedPassword);
-        history.push('/');
+        await data.createCourse(course, value.authenticatedUser.emailAddress, value.authenticatedPassword)
+        .then((response)=>{
+            if (response === null){
+                history.push("/")
+            }
+            else {
+                setErrors(response.message);
+                history.push("/courses/create");
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            history.push("/error");
+        })
     }
 
     return(
@@ -44,13 +57,15 @@ function CreateCourse(){
             <main>
                 <div className="wrap">
                     <h2>Create Course</h2>
+                    {
+                    errors?
                     <div className="validation--errors">
-                        <h3>Validation Errors</h3>
-                        <ul>
-                            <li>Please provide a value for "Title"</li>
-                            <li>Please provide a value for "Description"</li>
-                        </ul>
-                    </div>
+                    <h3>Validation Errors</h3>
+
+                        <p>{errors}</p>
+                    </div>:
+                    <React.Fragment></React.Fragment>
+                    }
                     <form onSubmit={handleSubmit}>
                         <div className="main--flex">
                             <div>

@@ -31,16 +31,20 @@ function UserSignUp(){
         .then(
             async (response) => 
             {
-            if (response === null){
-                await value.signIn(emailField, passwordField);
-                history.push("/");
+            if (response === null){ // signup successful
+                await value.signIn(emailField, passwordField); // signs the user in
+                history.push("/"); // redirect
             }
-            else {
+            else { //signup fails
                 setErrors(response.message)
                 history.push("/signup")
             }
             }
         )
+        .catch(error => {
+            console.error(error);
+            history.push("/error")
+        })
     }}
 
     return(

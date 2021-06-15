@@ -26,10 +26,10 @@ export default class Data {
       if (response.status === 200) {
         return response.json().then(data => data);
     }
-       else if (response.status === 401) { 
+      else if (response.status === 401) { 
         return null;
     }
-        else {
+      else {
         throw new Error();
     }
   }
@@ -50,8 +50,14 @@ export default class Data {
   //lets an authenticated user create a course
   async createCourse(course, username, password) {
     const response = await this.api('/courses', 'POST', course, true, {username, password});
-    if (response.status === 201) {
-      return null;
+    if (response.status === 400 || response.status === 401) {
+      return response.json().then(res => res) // bad request
+    }
+    else if (response.status === 201) {
+      return null; //course created
+    }
+    else {
+      throw new Error();
     }
   }
 
