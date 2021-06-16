@@ -17,6 +17,7 @@ function UpdateCourse(){
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
+    const [errors, setErrors] = useState(null);
 
     //display existing data for the course
      useEffect(()=>{
@@ -54,9 +55,25 @@ function UpdateCourse(){
             materialsNeeded,
             userId: value.authenticatedUser.id
         };
-        await data.updateCourse(`/courses/${id}`, course, value.authenticatedUser.emailAddress, value.authenticatedPassword);
-            history.push('/');   
-    }
+        await data.updateCourse(`/courses/${id}`, course, value.authenticatedUser.emailAddress, value.authenticatedPassword)
+        .then(
+            async (response) => 
+            {
+            if (response === null){ // update successful
+                history.push("/"); // redirect
+            }
+            else { //update fails
+                setErrors(response.message)
+                history.push(`/courses/${id}/update`)
+            }
+            }
+        )
+        .catch(error => {
+            console.error(error);
+            history.push("/error")
+        })
+    }  
+    
 
     return(
         <React.Fragment>
@@ -64,6 +81,15 @@ function UpdateCourse(){
             <main>
                     <div className="wrap">
                         <h2>Update Course</h2>
+                    {
+                    errors?
+                    <div className="validation--errors">
+                    <h3>Validation Errors</h3>
+
+                        <p>{errors}</p>
+                    </div>:
+                    <React.Fragment></React.Fragment>
+                    }
                         <form onSubmit={handleSubmit}>
                             <div className="main--flex">
                                 <div>
