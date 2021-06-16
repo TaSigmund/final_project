@@ -22,12 +22,12 @@ function UserSignIn(){
         e.preventDefault();
         await value.signIn(emailField, passwordField)
         .then(user => {
-            if (user === null){ //login successful
+            if (user === null){ //login unsuccessful
                 setErrors(['Please make sure you provide a correct username and/or password']);
                 history.push("/signin")
         }
             else{ //login successful
-                history.push("/")
+                history.goBack() //sends the user back to the previous page
         }})
         .catch(error => {
             console.error(error);

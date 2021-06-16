@@ -29,9 +29,6 @@ export default class Data {
       else if (response.status === 401) { 
         return null;
     }
-      else {
-        throw new Error();
-    }
   }
 
   async createUser(user) {
@@ -41,9 +38,6 @@ export default class Data {
     }
     else if (response.status === 201){
       return null // user profile was created
-    }
-    else {
-      throw new Error();
     }
   }
 
@@ -56,9 +50,6 @@ export default class Data {
     else if (response.status === 201) {
       return null; //course created
     }
-    else {
-      throw new Error();
-    }
   }
 
   async updateCourse(path, course, username, password) {
@@ -68,9 +59,6 @@ export default class Data {
     }
     else if (response.status === 204) {
       return null;
-    }
-    else {
-      throw new Error();
     }
   }
   async deleteCourse(path, username, password) {

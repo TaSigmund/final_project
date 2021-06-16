@@ -79,7 +79,7 @@ function CreateCourse(){
                                     onChange={e => setCourseTitle(e.target.value)}    
                                 />
 
-                                <label for="courseAuthor">Course Author</label>
+                                <label htmlFor="courseAuthor">Course Author</label>
                                 <input 
                                     id="courseAuthor" 
                                     name="courseAuthor" 
@@ -99,7 +99,7 @@ function CreateCourse(){
                                     ></textarea>
                             </div>
                             <div>
-                                <label for="estimatedTime">Estimated Time</label>
+                                <label htmlFor="estimatedTime">Estimated Time</label>
                                 <input 
                                     id="estimatedTime" 
                                     name="estimatedTime" 
