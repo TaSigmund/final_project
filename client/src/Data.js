@@ -63,7 +63,7 @@ export default class Data {
 
   async updateCourse(path, course, username, password) {
     const response = await this.api(path, 'PUT', course, true, {username, password});
-    if (response.status === 400 || response.status === 401) {
+    if (response.status === 400) {
       return response.json().then(res => res) // bad request
     }
     else if (response.status === 204) {
@@ -77,11 +77,6 @@ export default class Data {
     const response = await this.api(path, 'DELETE', null, true, {username, password});
     if (response.status === 204) {
       return null;
-    }
-    else {
-      return response.json().then(data => {
-        return data.errors;
-      });
     }
   }
 }

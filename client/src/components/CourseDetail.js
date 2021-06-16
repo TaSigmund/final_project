@@ -24,7 +24,12 @@ function CourseDetail(){
     let history = useHistory()
 
     const handleDelete = async(e) => {
-        await data.deleteCourse(`/courses/${id}`, value.authenticatedUser.emailAddress, value.authenticatedPassword);
+        await data.deleteCourse(`/courses/${id}`, value.authenticatedUser.emailAddress, value.authenticatedPassword)
+        .then(history.push("/"))
+        .catch(error => {
+            console.error(error);
+            history.push("/error");
+        })
     }
 
     /****
