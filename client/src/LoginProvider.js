@@ -33,7 +33,7 @@ export function LoginProvider({children}){
     
     //signin
     async function signIn(username, password){
-      const user = await data.getUser(username, password)
+      await data.getUser(username, password)
       .then(user => {
         if(user !== null){
           setAuthenticatedUser(user);
