@@ -1,3 +1,4 @@
+//dependencies
 import React, {useState, useContext, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import Header from './Header';
@@ -8,16 +9,21 @@ import Data from '../Data';
  * DISPLAYS A FORM TO UPDATE A COURSE
  ***/
 function UpdateCourse(){
-    const data = new Data(); //creates an instance of data
-    const value = useContext(LoginContext);
-    let history = useHistory();
-    let {id} = useParams();
 
+    //creates an instance of data
+    const data = new Data(); 
+
+    //context and history
+    const value = useContext(LoginContext);
+    const history = useHistory();
+    
+    //course data
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
     const [errors, setErrors] = useState(null);
+    const {id} = useParams();
 
     //display existing data for the course
      useEffect(()=>{
@@ -25,23 +31,33 @@ function UpdateCourse(){
             .then(res => {
                 if (res.status === 404){ //makes sure there is a course with that id
                     history.push("/notfound")}
-                else {return res}
-            })
-            .then(res => res.json())
-            .then(courseAsJSON => { //makes sure the authenticated user owns that course
-                if (courseAsJSON.userId !== value.authenticatedUser.id){
-                    history.push("/forbidden")
+                else {
+                    return res.json()
                 }
-                else {return courseAsJSON}
             })
-            .then(courseAsJSON => {
-                setCourseTitle(courseAsJSON.title);
-                setCourseDescription(courseAsJSON.description);
-                setEstimatedTime(courseAsJSON.estimatedTime);
-                setMaterialsNeeded(courseAsJSON.materialsNeeded);
-                return courseAsJSON
+            .then(courseAsJSON => { //makes sure the authenticated user owns that course
+                if(courseAsJSON){ //so the not found page does not get replaced by the error page
+                    if (courseAsJSON.userId !== value.authenticatedUser.id){ //authentication
+                        history.push("/forbidden")
+                    }
+                    else {
+                        return courseAsJSON
+                    }
+            }
             })
-            .catch(error => console.log('connection failed', error))
+            .then(courseAsJSON => { //sets all the relevant variables for this course
+                if(courseAsJSON){
+                    if(courseAsJSON.title){setCourseTitle(courseAsJSON.title)};
+                    if(courseAsJSON.description){setCourseDescription(courseAsJSON.description)};
+                    if(courseAsJSON.estimatedTime){setEstimatedTime(courseAsJSON.estimatedTime)};
+                    if(courseAsJSON.materialsNeeded){setMaterialsNeeded(courseAsJSON.materialsNeeded)};
+                    return courseAsJSON
+            }
+            })
+            .catch(error => { //deals with server errors
+                console.error(error);
+                history.push("/error")
+            })
     }, [id, history, value.authenticatedUser.id])//changes every time a new course is loaded
 
     //submit form and redirect
@@ -68,7 +84,7 @@ function UpdateCourse(){
             }
             }
         )
-        .catch(error => {
+        .catch(error => { //deals with server errors
             console.error(error);
             history.push("/error")
         })

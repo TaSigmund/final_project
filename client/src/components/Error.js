@@ -1,6 +1,11 @@
+//dependencies
 import React from 'react';
 import Header from './Header';
 import {Link} from "react-router-dom";
+
+/****
+ * DISPLAYS AN ERROR IF THERE IS A PROBLEM WITH THE SERVER
+ ***/
 
 function UnhandledError(){
     return(

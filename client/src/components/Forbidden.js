@@ -1,7 +1,11 @@
+//dependencies
 import React from 'react';
 import Header from './Header';
 import {Link} from "react-router-dom";
 
+/****
+ * DISPLAYS A PAGE THAT INFORMS THE USER THAT HE/SHE LACKS AUTHORIZATION
+ ***/
 function Forbidden(){
     return(
         <React.Fragment>

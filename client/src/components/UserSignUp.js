@@ -1,3 +1,4 @@
+//dependencies
 import React, {useState, useContext} from 'react';
 import Header from './Header';
 import {Link, useHistory} from 'react-router-dom';
@@ -8,9 +9,11 @@ import {LoginContext} from '../LoginProvider';
  ***/
 function UserSignUp(){
 
+    //context and history
     const value = useContext(LoginContext);
     let history = useHistory();
     
+    //field data
     const [firstNameField, setFirstNameField] = useState("");
     const [lastNameField, setLastNameField] = useState("");
     const [emailField, setEmailField] = useState("");
@@ -18,6 +21,7 @@ function UserSignUp(){
     const [confirmPasswordField, setConfirmPasswordField] = useState("");
     const [errors, setErrors] = useState(null);
 
+    //submit form
     const handleSubmit = async(e) => {
         e.preventDefault();
         if(passwordField===confirmPasswordField){ //checks for typos
@@ -41,7 +45,7 @@ function UserSignUp(){
             }
             }
         )
-        .catch(error => {
+        .catch(error => { //deals with server errors
             console.error(error);
             history.push("/error")
         })

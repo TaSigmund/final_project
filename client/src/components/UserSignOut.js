@@ -1,5 +1,6 @@
+//dependencies
 import {useContext, useEffect} from 'react';
-import {Redirect} from 'react-router-dom'
+import {Redirect, useHistory} from 'react-router-dom'
 import {LoginContext} from '../LoginProvider';
 
 /****
@@ -7,8 +8,19 @@ import {LoginContext} from '../LoginProvider';
  ***/
 
 function UserSignOut(){
+
+    //context and history
     const value = useContext(LoginContext);
-    useEffect(()=> {value.signOut()});
+    const history = useHistory();
+    
+    //signs the user out
+    useEffect(()=> {
+        value.signOut()
+        .catch(error => { //deals with server errors
+            console.error(error);
+            history.push("/error")
+        })
+    });
     return <Redirect to="/" />
 }
 

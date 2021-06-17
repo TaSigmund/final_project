@@ -1,3 +1,4 @@
+//dependencies
 import React, {useState, useEffect, useContext} from 'react';
 import Header from './Header';
 import {Link, useParams, useHistory} from "react-router-dom";
@@ -11,18 +12,22 @@ import ReactMarkdown from 'react-markdown';
 
 function CourseDetail(){
 
-    const data = new Data(); //creates an instance of data
+    //creates an instance of data
+    const data = new Data(); 
 
-    const [course, setCourse] = useState(""); //current course
-    const [user, setUser] = useState(""); //associated user
+    //course data
+    const [course, setCourse] = useState("");
+    const [user, setUser] = useState(""); 
     const [materials, setMaterials] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
-    let {id} = useParams();
+    const {id} = useParams();
 
+    //context and history
     const value = useContext(LoginContext);
     const authUser = value.authenticatedUser;
-    let history = useHistory()
+    const history = useHistory();
 
+    //deletes a course and redirects the user
     const handleDelete = async(e) => {
         await data.deleteCourse(`/courses/${id}`, value.authenticatedUser.emailAddress, value.authenticatedPassword)
         .then(history.push("/"))
@@ -36,22 +41,28 @@ function CourseDetail(){
     * FETCH DATA
     ***/
     useEffect(()=>{
+        
         fetch(`http://localhost:5000/api/courses/${id}`)
             .then(res => {
-                if (res.status === 404) //makes sure there is a course with that id
-                {history.push("/notfound")}
-                else {return res}
+                if (res.status === 404){ //makes sure there is a course with that id
+                    return history.push("/notfound")}
+                else {
+                    return res.json()
+                }
             })
-            .then(res => res.json())
-            .then(courseAsJSON => {
-                setCourse(courseAsJSON);
-                setUser(courseAsJSON.User);
-                setMaterials(courseAsJSON.materialsNeeded);
-                setCourseDescription(courseAsJSON.description);
+            .then(courseAsJSON => { //sets all the relevant variables for this course
+                if(courseAsJSON){ //so the not found page does not get replaced by the error page
+                    setCourse(courseAsJSON);
+                    if(courseAsJSON.User){setUser(courseAsJSON.User)}
+                    if(courseAsJSON.materialsNeeded){setMaterials(courseAsJSON.materialsNeeded)};
+                    if(courseAsJSON.description){setCourseDescription(courseAsJSON.description)};
+                }
             })
-            .catch(error => {
-                console.log('connection failed', error)})
-    }, [id, history])//changes every time a new course is loaded
+            .catch(error => { //deals with server errors
+                console.error(error);
+                history.push("/error");
+            })
+    }, [id, history])//fires every time a new course is loaded
 
     return(
     <React.Fragment>

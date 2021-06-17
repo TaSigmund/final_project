@@ -1,3 +1,4 @@
+//dependencies
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import Header from './Header';
@@ -15,7 +16,7 @@ function CreateCourse(){
 
     //access hook functionality
     const value = useContext(LoginContext);
-    let history = useHistory();
+    const history = useHistory();
 
     //store field data
     const [courseTitle, setCourseTitle] = useState("");
@@ -45,7 +46,7 @@ function CreateCourse(){
                 history.push("/courses/create");
             }
         })
-        .catch(error => {
+        .catch(error => { //deals with server errors
             console.error(error);
             history.push("/error");
         })

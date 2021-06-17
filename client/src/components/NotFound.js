@@ -1,7 +1,11 @@
+//dependencies
 import React from 'react';
 import Header from './Header';
 import {Link} from "react-router-dom";
 
+/****
+ * 404
+ ***/
 function NotFound(){
     return(
         <React.Fragment>

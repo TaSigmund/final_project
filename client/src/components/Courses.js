@@ -1,25 +1,28 @@
 //dependencies
 import React, {useState, useEffect} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import Header from './Header';
 
 /****
- * DISPLAYS A LIST OF ALL COURSES
+ * MAIN PAGE - DISPLAYS A LIST OF ALL COURSES 
  ***/
 function Courses(){
-    const [courses, setCourses] = useState([])
+    const [courses, setCourses] = useState([]);
+    const history = useHistory();
 
 /****
- * FETCH DATA
+ * FETCH DATA - ALL COURSES
  ***/
 useEffect(()=>{
         fetch('http://localhost:5000/api/courses')
             .then(res => res.json())
             .then(coursesAsJSON => setCourses(coursesAsJSON))
-            .catch(error => console.log('connection failed', error))
-    }, [courses.length])
-
+            .catch(error => { //deals with server errors
+                console.error(error);
+                history.push("/error")
+            })
+    }, [courses.length, history]) //fires every time the number of courses changes
 
     return(
         <React.Fragment>

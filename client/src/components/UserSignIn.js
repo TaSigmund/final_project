@@ -1,3 +1,4 @@
+//dependencies
 import React, {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import Header from './Header';
@@ -29,7 +30,7 @@ function UserSignIn(){
             else{ //login successful
                 history.goBack() //sends the user back to the previous page
         }})
-        .catch(error => {
+        .catch(error => { //deals with server errors
             console.error(error);
             history.push("/error")
         })
