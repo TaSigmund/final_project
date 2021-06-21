@@ -1,6 +1,6 @@
 //dependencies
 import React, {useState, useContext, useEffect} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
 import Data from '../Data';
@@ -16,6 +16,9 @@ function UpdateCourse(){
     //context and history
     const value = useContext(LoginContext);
     const history = useHistory();
+
+    //set current user
+    const authUser = value.authenticatedUser;
     
     //course data
     const [courseTitle, setCourseTitle] = useState("");
@@ -120,7 +123,7 @@ function UpdateCourse(){
                                     />
 
                                     <label htmlFor="courseAuthor">Course Author</label>
-                                    <input id="courseAuthor" name="courseAuthor" type="text"/>
+                                    <p>{authUser.firstName} {authUser.lastName}</p>
 
                                     <label htmlFor="courseDescription">Course Description</label>
                                     <textarea 
@@ -152,7 +155,7 @@ function UpdateCourse(){
                                     </textarea>
                                 </div>
                             </div>
-                            <button className="button" type="submit">Update Course</button><button className="button button-secondary">Cancel</button>
+                            <button className="button" type="submit">Update Course</button><Link to="/"><button className="button button-secondary">Cancel</button></Link>
                         </form>
                     </div>
                 </main>

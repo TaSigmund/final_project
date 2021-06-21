@@ -1,6 +1,6 @@
 //dependencies
 import React, {useState, useContext} from 'react';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
 import Data from '../Data';
@@ -17,14 +17,19 @@ function CreateCourse(){
     //access hook functionality
     const value = useContext(LoginContext);
     const history = useHistory();
+    
+    //set current user
+    const authUser = value.authenticatedUser;
 
     //store field data
     const [courseTitle, setCourseTitle] = useState("");
-    const [courseAuthor, setCourseAuthor] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
     const [errors, setErrors] = useState(null);
+
+
+    
 
     //submit form and redirect
     const handleSubmit = async(e) => {
@@ -81,15 +86,7 @@ function CreateCourse(){
                                 />
 
                                 <label htmlFor="courseAuthor">Course Author</label>
-                                <input 
-                                    id="courseAuthor" 
-                                    name="courseAuthor" 
-                                    type="text"
-                                    value={courseAuthor}
-                                    placeholder="Please provide a course author."
-                                    onChange={e => setCourseAuthor(e.target.value)}
-                                />
-
+                                <p>{authUser.firstName} {authUser.lastName}</p>
                                 <label htmlFor="courseDescription">Course Description</label>
                                 <textarea 
                                     id="courseDescription" 
@@ -120,7 +117,7 @@ function CreateCourse(){
                                     ></textarea>
                             </div>
                         </div>
-                        <button className="button" type="submit">Create Course</button><button className="button button-secondary">Cancel</button>
+                        <button className="button" type="submit">Create Course</button><Link to="/"><button className="button button-secondary">Cancel</button></Link>
                     </form>
                 </div>
             </main>

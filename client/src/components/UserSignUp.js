@@ -107,7 +107,7 @@ function UserSignUp(){
                             value={confirmPasswordField}
                             onChange={e => setConfirmPasswordField(e.target.value)}
                             />
-                        <button className="button" type="submit">Sign Up</button><button className="button button-secondary">Cancel</button>
+                        <Link to="/"><button className="button">Sign Up</button><button className="button button-secondary">Cancel</button></Link>
                     </form>
                     <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
                 </div>

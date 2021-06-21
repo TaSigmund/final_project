@@ -22,7 +22,7 @@ function Header(){
                     {
                     authUser ?
                     <React.Fragment>
-                    <li>{authUser.firstName} {authUser.lastName}</li>
+                    <li>Welcome {authUser.firstName} {authUser.lastName}</li>
                     <li><Link to="/signout">Sign Out</Link></li> 
                     </React.Fragment> :
                     <React.Fragment>
