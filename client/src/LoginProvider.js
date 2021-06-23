@@ -1,6 +1,5 @@
 //dependencies
 import React, {useState, createContext} from 'react';
-import {useHistory} from "react-router-dom"
 import Data from './Data';
 import Cookies from 'js-cookie';
 
@@ -19,33 +18,20 @@ export function LoginProvider({children}){
     const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null); //check for cookie as possible default value
     const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
 
-    //history
-    const history = useHistory();
-
     //signup
     async function signUp(user){
-        return await data.createUser(user)
-        .catch(error => { //deals with server errors
-          console.error(error);
-          history.push("/error")
-        });
-      }
+      return await data.createUser(user)
+    }
     
     //signin
     async function signIn(username, password){
-      await data.getUser(username, password)
-      .then(user => {
-        if(user !== null){
-          setAuthenticatedUser(user);
-          setAuthenticatedPassword(password);
-          Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); //cookie name, stored user data, let expire after one day
-        }
-        return user} 
-      )
-      .catch(error => { //deals with server errors
-        console.error(error);
-        history.push("/error")
-      })
+      const user = await data.getUser(username, password)
+      if(user){
+        setAuthenticatedUser(user);
+        setAuthenticatedPassword(password);
+        Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); //cookie name, stored user data, let expire after one day
+      }
+      return user
     }
     
     //signout

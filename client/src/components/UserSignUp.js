@@ -37,7 +37,7 @@ function UserSignUp(){
             {
             if (response === null){ // signup successful
                 await value.signIn(emailField, passwordField); // signs the user in
-                history.push("/"); // redirect
+                history.push("/");
             }
             else { //signup fails
                 setErrors(response.message)
@@ -107,7 +107,7 @@ function UserSignUp(){
                             value={confirmPasswordField}
                             onChange={e => setConfirmPasswordField(e.target.value)}
                             />
-                        <Link to="/"><button className="button">Sign Up</button><button className="button button-secondary">Cancel</button></Link>
+                        <button className="button" type="submit">Sign Up</button><Link to="/"><button className="button button-secondary">Cancel</button></Link>
                     </form>
                     <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
                 </div>

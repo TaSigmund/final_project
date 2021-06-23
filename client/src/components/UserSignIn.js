@@ -7,7 +7,7 @@ import {LoginContext} from '../LoginProvider';
 /****
  * DISPLAYS A SIGN IN FORM
  ***/
-function UserSignIn(){
+function UserSignIn(props){
 
     //access hook functionality
     const value = useContext(LoginContext);
@@ -22,14 +22,17 @@ function UserSignIn(){
     const handleSubmit = async(e) => {
         e.preventDefault();
         await value.signIn(emailField, passwordField)
-        .then(user => {
-            if (user === null){ //login unsuccessful
-                setErrors(['Please make sure you provide a correct username and/or password']);
+        .then(
+            response => {
+             if (response === null){ //login unsuccessful
+                setErrors("Please provide credentials.");
                 history.push("/signin")
-        }
-            else{ //login successful
-                history.goBack() //sends the user back to the previous page
-        }})
+            }
+            else { //login successful
+                history.goBack();
+            }
+                
+        })
         .catch(error => { //deals with server errors
             console.error(error);
             history.push("/error")
@@ -47,7 +50,7 @@ function UserSignIn(){
                     <div className="validation--errors">
                     <h3>Validation Errors</h3>
 
-                        <p>{errors[0]}</p>
+                        <p>{errors}</p>
                     </div>:
                     <React.Fragment></React.Fragment>
                 }

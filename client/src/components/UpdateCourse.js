@@ -155,7 +155,7 @@ function UpdateCourse(){
                                     </textarea>
                                 </div>
                             </div>
-                            <button className="button" type="submit">Update Course</button><Link to="/"><button className="button button-secondary">Cancel</button></Link>
+                            <button className="button" type="submit">Update Course</button><Link to={`/courses/${id}`}><button className="button button-secondary">Cancel</button></Link>
                         </form>
                     </div>
                 </main>
