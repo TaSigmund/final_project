@@ -23,10 +23,13 @@ export default class Data {
   }
   async getUser(username, password){
       const response = await this.api(`/users`, 'GET', null, true, { username, password })
-      if (response.status === 200) {
+      if (response.status === 500) { // server error
+        throw new Error()
+      } 
+      else if (response.status === 200) {  //authenticated user
         return response.json().then(res => res);
     }
-      else if (response.status === 401) { 
+      else if (response.status === 401) { //no authentication
         return null;
     }
   }
@@ -63,7 +66,10 @@ export default class Data {
   }
   async deleteCourse(path, username, password) {
     const response = await this.api(path, 'DELETE', null, true, {username, password});
-    if (response.status === 204) {
+    if (response.status === 500) {// server error
+      return response.json().then(res => res) 
+    }
+    else if (response.status === 204) {
       return null;
     }
   }

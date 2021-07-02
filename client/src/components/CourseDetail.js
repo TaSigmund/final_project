@@ -30,7 +30,15 @@ function CourseDetail(){
     //deletes a course and redirects the user
     const handleDelete = async(e) => {
         await data.deleteCourse(`/courses/${id}`, value.authenticatedUser.emailAddress, value.authenticatedPassword)
-        .then(history.push("/"))
+        .then(async (response) =>
+            {
+            if(response === null){
+                history.push("/")
+            }
+            else {
+                throw new Error()
+            }
+        })
         .catch(error => {
             console.error(error);
             history.push("/error");
@@ -45,7 +53,11 @@ function CourseDetail(){
         fetch(`http://localhost:5000/api/courses/${id}`)
             .then(res => {
                 if (res.status === 404){ //makes sure there is a course with that id
-                    return history.push("/notfound")}
+                    return history.push("/notfound")
+                }
+                else if (res.status === 500){ //checks for server errors
+                    throw new Error()
+                }
                 else {
                     return res.json()
                 }

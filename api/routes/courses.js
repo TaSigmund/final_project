@@ -109,7 +109,7 @@ router.delete('/:id', authenticateUser, asyncHandler(async (req, res, next)=>{
     }
     else{
     await courseToDelete.destroy();
-    res.status(204).end();
+      res.status(204).end();
     }
   }
   else{

@@ -24,14 +24,13 @@ function UserSignIn(props){
         await value.signIn(emailField, passwordField)
         .then(
             response => {
-             if (response === null){ //login unsuccessful
-                setErrors("Please provide credentials.");
-                history.push("/signin")
-            }
-            else { //login successful
-                history.goBack();
-            }
-                
+                if (response === null){ //login unsuccessful
+                    setErrors("Please provide credentials.");
+                    history.push("/signin")
+                }
+                else { //login successful
+                    history.goBack();
+                } 
         })
         .catch(error => { //deals with server errors
             console.error(error);
