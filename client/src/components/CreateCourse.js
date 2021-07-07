@@ -4,6 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
 import Data from '../Data';
+import ReactMarkdown from 'react-markdown';
 
 /****
  * DISPLAYS A FORM TO CREATE A NEW COURSE
@@ -67,8 +68,7 @@ function CreateCourse(){
                     errors?
                     <div className="validation--errors">
                     <h3>Validation Errors</h3>
-
-                        <p>{errors}</p>
+                        <ReactMarkdown>{errors.replaceAll("Validation error:", "*").replaceAll(",", "")}</ReactMarkdown>
                     </div>:
                     <React.Fragment></React.Fragment>
                     }

@@ -3,6 +3,7 @@ import React, {useState, useContext} from 'react';
 import Header from './Header';
 import {Link, useHistory} from 'react-router-dom';
 import {LoginContext} from '../LoginProvider';
+import ReactMarkdown from 'react-markdown';
 
 /****
  * DISPLAYS A SIGN UP FORM
@@ -61,8 +62,7 @@ function UserSignUp(){
                     errors?
                     <div className="validation--errors">
                     <h3>Validation Errors</h3>
-
-                        <p>{errors}</p>
+                        <ReactMarkdown>{errors.replaceAll("Validation error:", "*").replaceAll(",", "")}</ReactMarkdown>
                     </div>:
                     <React.Fragment></React.Fragment>
                     }

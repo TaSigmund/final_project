@@ -14,9 +14,9 @@ export function LoginProvider({children}){
     //creates an instance of data
     const data = new Data(); 
 
-    //authentication data
-    const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null); //check for cookie as possible default value
-    const [authenticatedPassword, setAuthenticatedPassword] = useState(null);
+    //authentication data & check for cookies as possible default values
+    const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null); 
+    const [authenticatedPassword, setAuthenticatedPassword] = useState(Cookies.getJSON('authenticatedPassword') ||null);
 
     //signup
     async function signUp(user){
@@ -30,6 +30,7 @@ export function LoginProvider({children}){
         setAuthenticatedUser(user);
         setAuthenticatedPassword(password);
         Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); //cookie name, stored user data, let expire after one day
+        Cookies.set('authenticatedPassword', password, { expires: 1 }); //cookie name, stored password, let expire after one day
       }
       return user
     }

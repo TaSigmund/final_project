@@ -3,6 +3,7 @@ import React, {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
+import ReactMarkdown from 'react-markdown';
 
 /****
  * DISPLAYS A SIGN IN FORM
@@ -25,7 +26,7 @@ function UserSignIn(props){
         .then(
             response => {
                 if (response === null){ //login unsuccessful
-                    setErrors("Please provide credentials.");
+                    setErrors("* Please provide credentials.");
                     history.push("/signin")
                 }
                 else { //login successful
@@ -49,7 +50,7 @@ function UserSignIn(props){
                     <div className="validation--errors">
                     <h3>Validation Errors</h3>
 
-                        <p>{errors}</p>
+                        <ReactMarkdown>{errors}</ReactMarkdown>
                     </div>:
                     <React.Fragment></React.Fragment>
                 }
