@@ -40,6 +40,7 @@ export function LoginProvider({children}){
       setAuthenticatedUser(null);
       setAuthenticatedPassword(null);
       Cookies.remove('authenticatedUser');
+      Cookies.remove('authenticatedPassword');
       return null
     }
 
