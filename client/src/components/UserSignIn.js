@@ -1,6 +1,6 @@
 //dependencies
 import React, {useState, useContext} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, Redirect, useHistory} from 'react-router-dom';
 import Header from './Header';
 import {LoginContext} from '../LoginProvider';
 import ReactMarkdown from 'react-markdown';
@@ -27,7 +27,7 @@ function UserSignIn(props){
             response => {
                 if (response === null){ //login unsuccessful
                     setErrors("* Please provide credentials.");
-                    history.push("/signin")
+                    return <Redirect push to ="/signin"/>;
                 }
                 else { //login successful
                     history.goBack();
